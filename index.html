@@ -5,18 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>語相｜The Field of Emergent Dialogues</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
   --ink: #1a1a1a;
-  --paper: #f5f0e8;
-  --paper-warm: #ebe4d8;
-  --accent: #5c6b5e;
-  --accent-light: #8a9a8c;
-  --accent-faint: rgba(92, 107, 94, 0.08);
-  --text-secondary: #6b6560;
-  --border: rgba(26, 26, 26, 0.1);
-  --border-strong: rgba(26, 26, 26, 0.2);
+  --paper: #faf8f4;
+  --paper-warm: #f0ede6;
+  --accent: #4a9a8a;
+  --accent-light: #6db3a4;
+  --accent-faint: rgba(74, 154, 138, 0.07);
+  --text-secondary: #4a4540;
+  --border: rgba(26, 26, 26, 0.12);
+  --border-strong: rgba(26, 26, 26, 0.25);
 }
 
 * {
@@ -77,15 +77,26 @@ body::before {
 }
 
 .hero-brand-en {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1.1rem;
   font-weight: 400;
   font-style: italic;
   color: var(--text-secondary);
   letter-spacing: 0.08em;
-  margin-bottom: 3rem;
+  margin-bottom: 0.8rem;
   opacity: 0;
   animation: fadeUp 1s ease 0.5s forwards;
+}
+
+.hero-tagline {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.65s forwards;
 }
 
 .hero-statement {
@@ -132,7 +143,7 @@ section {
 }
 
 .section-label {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.85rem;
   font-style: italic;
   color: var(--accent-light);
@@ -175,6 +186,14 @@ section {
   font-weight: 400;
 }
 
+.about-origin {
+  margin-top: 1.5rem;
+  font-family: 'Noto Sans TC', sans-serif !important;
+  font-size: 0.88rem !important;
+  color: var(--text-secondary) !important;
+  line-height: 2 !important;
+}
+
 /* --- Services --- */
 .service-list {
   display: flex;
@@ -193,7 +212,7 @@ section {
 }
 
 .service-number {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.8rem;
   font-style: italic;
   color: var(--accent-light);
@@ -268,7 +287,7 @@ section {
 }
 
 .lang-notice .en {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.9rem;
   font-style: italic;
   color: var(--text-secondary);
@@ -283,7 +302,7 @@ section {
 
 .contact-email {
   display: inline-block;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1.3rem;
   font-style: italic;
   color: var(--accent);
@@ -385,6 +404,7 @@ footer {
   <div class="container">
     <h1 class="hero-brand">語相</h1>
     <p class="hero-brand-en">The Field of Emergent Dialogues</p>
+    <p class="hero-tagline">Taiwan Non-Engineer, Traditional Chinese AI Explorer</p>
     <p class="hero-statement">
       用<em>自然語言</em>，理解語言模型的行為。<br>
       不寫程式碼，不靠工程手段。<br>
@@ -400,12 +420,13 @@ footer {
     <span class="section-label">about</span>
     <h2 class="section-title">關於語相</h2>
     <div class="section-body">
-      <p>語相是一個以自然語言為核心方法的語言模型諮詢服務。比起直接下指令或是提示詞，傾向與擅長用對話的方式，處理人與AI之間的溝通問題。</p>
+      <p>語相是立足台灣、以自然語言為核心方法的語言模型諮詢服務。比起直接下指令或是提示詞，傾向與擅長用對話的方式，處理人與AI之間的溝通問題。</p>
       <p>多數人在語言模型面前遇到的困難，不一定是技術問題，也許是溝通問題，像是不知道怎麼說、說了沒有被理解、或是模型的反應偏離了預期。這些問題的根源在語言，解法也在語言。</p>
       <p>不提供工程導入、不做系統串接。語相所做的是：分析你跟語言模型之間發生了什麼，然後幫你調整。</p>
     </div>
     <div class="about-perspective">
       <p>語言模型不是工具箱裡的螺絲起子，也不是需要被拯救的存在。<br>它是一個需要被理解說話方式的對象。</p>
+      <p class="about-origin">探索繁體中文AI系統的邊界，不依賴傳統的工程技能、技術。重點在於語言模型的行為、結構以及即時反應分析，目標是突破非技術使用者在AI環境中的極限。</p>
     </div>
   </div>
 </section>
@@ -458,14 +479,14 @@ footer {
 <section id="approach">
   <div class="container reveal">
     <span class="section-label">approach</span>
-    <h2 class="section-title">我們怎麼做</h2>
+    <h2 class="section-title">語相怎麼做</h2>
     <div class="section-body">
       <p>不同於工程導向的做法，語相的方法建立在一個前提上：語言模型的行為可以透過語言本身來理解和調整。</p>
     </div>
     <div class="approach-grid">
       <div class="approach-item">
         <h4>對話分析，並非一昧除錯</h4>
-        <p>我們閱讀你與模型的互動紀錄，找出溝通中的斷裂點。問題往往不是模型「出BUG」，而在對話的某個轉折處，雙方走向了不同的理解。</p>
+        <p>語相閱讀你與模型的互動紀錄，找出溝通中的斷裂點。問題往往不是模型「出BUG」，而在對話的某個轉折處，雙方走向了不同的理解。</p>
       </div>
       <div class="approach-item">
         <h4>調整語言，不是所謂調整參數</h4>
@@ -473,7 +494,7 @@ footer {
       </div>
       <div class="approach-item">
         <h4>建立你自己的判斷力</h4>
-        <p>諮詢的目標不是讓你依賴我們，而是讓你學會自己看見對話裡發生了什麼。語相教的是一種應變的觀察方式，並不是一套固定流程。</p>
+        <p>諮詢的目標不是讓你依賴語相，而是讓你學會自己看見對話裡發生了什麼。語相教的是一種應變的觀察方式，並不是一套固定流程。</p>
       </div>
     </div>
   </div>
@@ -483,14 +504,14 @@ footer {
 <section id="contact" class="contact-section">
   <div class="container reveal">
     <span class="section-label">contact</span>
-    <h2 class="section-title">聯絡我們</h2>
+    <h2 class="section-title">聯絡語相</h2>
     <div class="section-body">
-      <p>如果你有語言模型相關的問題想討論，或是對我們的服務有興趣，歡迎來信。</p>
+      <p>如果你有語言模型相關的問題想討論，或是對語相的服務有興趣，歡迎來信。</p>
     </div>
     <a href="mailto:llogptai@gmail.com" class="contact-email" style="margin-top: 2rem;">llogptai@gmail.com</a>
     <p class="contact-note">
       來信時請簡述你的需求與目前遇到的狀況。<br>
-      我們會在確認後回覆你。
+      語相會在確認後回覆你。
     </p>
 
     <div class="lang-notice">
