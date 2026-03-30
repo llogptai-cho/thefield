@@ -5,29 +5,37 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>語相｜The Field of Emergent Dialogues</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #1a1a1a;
-  --paper: #faf8f4;
-  --paper-warm: #f0ede6;
-  --accent: #4a9a8a;
-  --accent-light: #6db3a4;
-  --accent-faint: rgba(74, 154, 138, 0.07);
-  --text-secondary: #4a4540;
-  --border: rgba(26, 26, 26, 0.12);
-  --border-strong: rgba(26, 26, 26, 0.25);
+  --ink: #201c19;
+  --ink-soft: #5e564f;
+  --paper: #f3ebdb;
+  --paper-deep: #e6dbc7;
+  --line: rgba(32, 28, 25, 0.14);
+  --line-strong: rgba(32, 28, 25, 0.28);
+  --forest: #566c53;
+  --forest-deep: #374634;
+  --moss: #8aa06e;
+  --tea: #b67b3e;
+  --ember: #935b37;
+  --mist: rgba(86, 108, 83, 0.09);
+  --glow: rgba(138, 160, 110, 0.18);
+  --shadow: 0 20px 50px rgba(46, 34, 22, 0.12);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 17px; }
 
 body {
   font-family: 'Noto Sans TC', sans-serif;
-  background: var(--paper);
+  background:
+    radial-gradient(circle at 10% 12%, rgba(182, 123, 62, 0.12), transparent 24%),
+    radial-gradient(circle at 85% 18%, rgba(138, 160, 110, 0.12), transparent 26%),
+    radial-gradient(circle at 70% 88%, rgba(86, 108, 83, 0.11), transparent 22%),
+    linear-gradient(180deg, #f6efdf 0%, #f1e7d4 100%);
   color: var(--ink);
-  line-height: 1.8;
+  line-height: 1.85;
   font-weight: 300;
   overflow-x: hidden;
 }
@@ -35,203 +43,854 @@ body {
 body::before {
   content: '';
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.045'/%3E%3C/svg%3E");
   pointer-events: none;
+  opacity: 0.4;
   z-index: 9999;
 }
 
-.container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+.page-shell {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 1.6rem 1.8rem 2.8rem;
+  position: relative;
+}
 
-/* Hero */
-.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; padding: 4rem 0; }
-.hero-brand { font-family: 'Noto Serif TC', serif; font-size: 3.2rem; font-weight: 700; letter-spacing: 0.15em; margin-bottom: 0.5rem; opacity: 0; animation: fadeUp 1s ease 0.2s forwards; }
-.hero-brand-en { font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 400; font-style: italic; color: var(--text-secondary); letter-spacing: 0.05em; margin-bottom: 0.8rem; opacity: 0; animation: fadeUp 1s ease 0.5s forwards; }
-.hero-tagline { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 500; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 3rem; opacity: 0; animation: fadeUp 1s ease 0.65s forwards; }
-.hero-statement { font-family: 'Noto Serif TC', serif; font-size: 1.25rem; font-weight: 400; line-height: 2.2; max-width: 600px; opacity: 0; animation: fadeUp 1s ease 0.8s forwards; }
-.hero-statement em { font-style: normal; color: var(--accent); font-weight: 600; }
-.scroll-hint { position: absolute; bottom: 3rem; left: 2rem; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: var(--text-secondary); letter-spacing: 0.2em; opacity: 0; animation: fadeUp 1s ease 1.2s forwards; }
-.scroll-hint::after { content: ''; display: block; width: 1px; height: 40px; background: var(--border-strong); margin-top: 0.8rem; animation: scrollLine 2s ease-in-out infinite; }
+.leaf-mark,
+.scribble-mark {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.8;
+}
 
-/* Sections */
-section { padding: 6rem 0; border-top: 1px solid var(--border); }
-.section-label { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-style: italic; color: var(--accent-light); letter-spacing: 0.15em; margin-bottom: 2.5rem; text-transform: lowercase; }
-.section-title { font-family: 'Noto Serif TC', serif; font-size: 1.8rem; font-weight: 600; margin-bottom: 2rem; line-height: 1.6; }
-.section-body { font-size: 1.05rem; color: var(--text-secondary); line-height: 2; max-width: 640px; }
-.section-body p + p { margin-top: 1.5rem; }
+.leaf-mark.top-right {
+  top: 6.2rem;
+  right: 1.5rem;
+  width: 150px;
+  color: rgba(86, 108, 83, 0.34);
+}
 
-/* About */
-.about-perspective { margin-top: 3rem; padding: 2rem 0 0; border-top: 1px solid var(--border); }
-.about-perspective p { font-family: 'Noto Serif TC', serif; font-size: 1.15rem; line-height: 2.2; color: var(--ink); font-weight: 400; }
-.about-origin { margin-top: 1.5rem; font-family: 'Noto Sans TC', sans-serif !important; font-size: 0.95rem !important; color: var(--text-secondary) !important; line-height: 2 !important; }
+.leaf-mark.mid-left {
+  top: 58rem;
+  left: -0.5rem;
+  width: 120px;
+  color: rgba(138, 160, 110, 0.28);
+  transform: rotate(-10deg);
+}
 
-/* Services */
-.service-list { display: flex; flex-direction: column; gap: 2.5rem; margin-top: 2rem; }
-.service-item { padding: 2rem 0; border-bottom: 1px solid var(--border); }
-.service-item:last-child { border-bottom: none; }
-.service-number { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-style: italic; color: var(--accent-light); margin-bottom: 0.8rem; }
-.service-name { font-family: 'Noto Serif TC', serif; font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; }
-.service-desc { font-size: 1rem; color: var(--text-secondary); line-height: 1.9; max-width: 580px; }
-.service-tags { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.service-tag { font-size: 0.82rem; color: var(--accent); background: var(--accent-faint); padding: 0.3rem 0.8rem; border-radius: 2px; letter-spacing: 0.05em; }
+.leaf-mark.bottom-right {
+  bottom: 8rem;
+  right: 0.6rem;
+  width: 110px;
+  color: rgba(182, 123, 62, 0.26);
+  transform: rotate(8deg);
+}
 
-/* Approach */
-.approach-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2rem; }
-.approach-item { padding: 1.8rem; background: var(--paper-warm); border-left: 2px solid var(--accent-light); }
-.approach-item h4 { font-family: 'Noto Serif TC', serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.8rem; }
-.approach-item p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+.scribble-mark.hero {
+  top: 29rem;
+  right: 18rem;
+  width: 92px;
+  color: rgba(147, 91, 55, 0.25);
+  transform: rotate(-9deg);
+}
 
-/* Language notice */
-.lang-notice { margin-top: 4rem; padding: 1.5rem 2rem; background: var(--accent-faint); border-left: 2px solid var(--accent); font-size: 0.95rem; line-height: 1.8; }
-.lang-notice .en { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-style: italic; color: var(--text-secondary); margin-top: 0.5rem; display: block; }
+.scribble-mark.services {
+  top: 89rem;
+  right: 5rem;
+  width: 84px;
+  color: rgba(86, 108, 83, 0.22);
+  transform: rotate(7deg);
+}
 
-/* Contact */
-.contact-section { text-align: left; }
-.contact-email { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 1.2rem; color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-light); padding-bottom: 0.2rem; transition: border-color 0.3s ease; }
-.contact-email:hover { border-color: var(--accent); }
-.contact-note { margin-top: 1.5rem; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.9; }
+.top-note {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.83rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 1.5rem;
+}
 
-/* Footer */
-footer { padding: 3rem 0; border-top: 1px solid var(--border); text-align: center; }
-.footer-brand { font-family: 'Noto Serif TC', serif; font-size: 1rem; font-weight: 600; letter-spacing: 0.1em; color: var(--text-secondary); }
-.footer-copy { font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: var(--accent-light); margin-top: 0.5rem; }
+.hero-card {
+  position: relative;
+  min-height: auto;
+  padding: 3.2rem;
+  border: 1px solid rgba(55, 70, 52, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.52), rgba(255,255,255,0.22)),
+    linear-gradient(135deg, rgba(138,160,110,0.14), rgba(182,123,62,0.08)),
+    linear-gradient(180deg, rgba(243,235,219,0.85), rgba(230,219,199,0.6));
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(260px, 0.82fr);
+  gap: 2.2rem;
+  overflow: hidden;
+}
 
-/* Animations */
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes scrollLine { 0%, 100% { opacity: 0.3; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.3); transform-origin: top; } }
-.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: auto auto -120px -120px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(182, 123, 62, 0.12), transparent 68%);
+  filter: blur(10px);
+}
+
+.hero-card::after {
+  content: '';
+  position: absolute;
+  right: -80px;
+  top: 40px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow), transparent 70%);
+  filter: blur(8px);
+}
+
+.hero-main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 720px;
+}
+
+.eyebrow {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--forest-deep);
+  margin-bottom: 1.5rem;
+}
+
+.brand-zh {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(3rem, 6vw, 5.1rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.2rem;
+}
+
+.brand-en {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin-bottom: 1.2rem;
+}
+
+.hero-subline {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.82rem;
+  color: var(--tea);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 2.8rem;
+}
+
+.hero-statement {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  line-height: 2.15;
+  max-width: 700px;
+}
+
+.hero-statement em {
+  font-style: normal;
+  color: var(--forest-deep);
+  font-weight: 700;
+}
+
+.hero-note {
+  margin-top: 2rem;
+  max-width: 620px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.hero-side {
+  position: relative;
+  z-index: 1;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.desk-card,
+.field-card {
+  background: rgba(255, 251, 243, 0.8);
+  border: 1px solid rgba(86, 108, 83, 0.14);
+  padding: 1.2rem 1.2rem 1rem;
+  backdrop-filter: blur(8px);
+  position: relative;
+}
+
+.desk-card::after {
+  content: '✦';
+  position: absolute;
+  right: 1rem;
+  bottom: 0.85rem;
+  color: rgba(182, 123, 62, 0.32);
+  font-size: 1rem;
+}
+
+.field-card::after {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  bottom: 0.8rem;
+  width: 44px;
+  height: 10px;
+  border-bottom: 2px solid rgba(86, 108, 83, 0.18);
+  border-radius: 50%;
+}
+
+.desk-card h3,
+.field-card h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.05rem;
+  margin-bottom: 0.55rem;
+}
+
+.desk-card p,
+.field-card p {
+  color: var(--ink-soft);
+  font-size: 0.93rem;
+  line-height: 1.8;
+}
+
+.field-tags {
+  margin-top: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.field-tags span {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.76rem;
+  color: var(--forest-deep);
+  background: rgba(138, 160, 110, 0.1);
+  border: 1px solid rgba(138, 160, 110, 0.18);
+  padding: 0.28rem 0.6rem;
+}
+
+.scroll-line {
+  margin-top: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+}
+
+.scroll-line::after {
+  content: '';
+  width: 56px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+  gap: 2.2rem;
+  margin-top: 1.6rem;
+}
+
+.side-rail {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  padding: 1.2rem 1rem 1rem;
+  border: 1px solid rgba(55, 70, 52, 0.12);
+  background: rgba(255, 250, 242, 0.72);
+  box-shadow: var(--shadow);
+  border-radius: 18px;
+}
+
+.side-rail h4 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--forest-deep);
+  margin-bottom: 1rem;
+}
+
+.side-rail ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.side-rail a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.side-rail a:hover { color: var(--ink); }
+
+.note-block {
+  margin-top: 1.6rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.main-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.panel {
+  background: rgba(255, 252, 247, 0.82);
+  border: 1px solid rgba(55, 70, 52, 0.12);
+  padding: 2rem 2.1rem;
+  box-shadow: var(--shadow);
+  position: relative;
+  border-radius: 24px;
+}
+
+.panel.panel-about::before {
+  content: '';
+  position: absolute;
+  right: 1.4rem;
+  top: 1.2rem;
+  width: 54px;
+  height: 54px;
+  background: radial-gradient(circle, rgba(138, 160, 110, 0.16), transparent 70%);
+  filter: blur(4px);
+}
+
+.panel.panel-services::after {
+  content: '';
+  position: absolute;
+  left: 1.3rem;
+  bottom: 1rem;
+  width: 74px;
+  height: 20px;
+  border-bottom: 2px solid rgba(182, 123, 62, 0.18);
+  border-radius: 50%;
+}
+
+.panel-label {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--ember);
+  margin-bottom: 1.4rem;
+}
+
+.panel-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+  line-height: 1.45;
+  margin-bottom: 1rem;
+  max-width: 15em;
+}
+
+.panel-body {
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.92;
+  max-width: 720px;
+}
+
+.panel-body p + p { margin-top: 1.2rem; }
+
+.quote-strip {
+  margin-top: 1.8rem;
+  padding-left: 1rem;
+  border-left: 2px solid rgba(86, 108, 83, 0.3);
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.02rem;
+  color: var(--ink);
+}
+
+.service-stack {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.35rem;
+}
+
+.service-card {
+  border: 1px solid rgba(86, 108, 83, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.38), rgba(255,255,255,0.12)),
+    linear-gradient(90deg, rgba(138,160,110,0.05), rgba(182,123,62,0.03));
+  padding: 1.25rem 1.3rem;
+  position: relative;
+  border-radius: 18px;
+}
+
+.service-card:last-child {
+  grid-column: 1 / -1;
+}
+
+.service-card:nth-child(2)::after {
+  content: '◦';
+  position: absolute;
+  right: 1rem;
+  top: 0.9rem;
+  color: rgba(86, 108, 83, 0.24);
+  font-size: 1.2rem;
+}
+
+.service-card h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.16rem;
+  margin-bottom: 0.5rem;
+}
+
+.service-card p {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.85;
+}
+
+.service-meta {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.service-meta span {
+  font-size: 0.76rem;
+  color: var(--forest-deep);
+  background: rgba(138, 160, 110, 0.1);
+  padding: 0.28rem 0.58rem;
+  border: 1px solid rgba(138, 160, 110, 0.18);
+}
+
+.room-link-card {
+  margin-top: 1.1rem;
+  border: 1px dashed rgba(86, 108, 83, 0.26);
+  background: rgba(248, 242, 231, 0.7);
+  padding: 1.15rem 1.2rem;
+  border-radius: 18px;
+}
+
+.room-link-card h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.02rem;
+  margin-bottom: 0.45rem;
+}
+
+.room-link-card p {
+  color: var(--ink-soft);
+  font-size: 0.93rem;
+  line-height: 1.8;
+}
+
+.inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+  color: var(--forest-deep);
+  text-decoration: none;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.inline-link::after {
+  content: '→';
+  font-size: 1rem;
+}
+
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1.2rem;
+}
+
+.method-card {
+  padding: 1.15rem 1.1rem;
+  background: linear-gradient(180deg, rgba(230,219,199,0.86), rgba(230,219,199,0.6));
+  border-top: 2px solid var(--forest);
+  border-radius: 16px;
+}
+
+.method-card h4 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.method-card p {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.contact-box {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.8fr);
+  gap: 1.1rem;
+  align-items: start;
+}
+
+.contact-email {
+  display: inline-block;
+  margin-top: 1.3rem;
+  color: var(--forest-deep);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 1.08rem;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(55, 70, 52, 0.35);
+  padding-bottom: 0.18rem;
+}
+
+.contact-card {
+  padding: 1.2rem;
+  border: 1px solid rgba(86, 108, 83, 0.12);
+  background: rgba(255,255,255,0.5);
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.lang-note {
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.88rem;
+}
+
+footer {
+  margin-top: 2rem;
+  padding: 2rem 0 3.5rem;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.footer-brand {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 0.98rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+}
+
+.footer-copy {
+  margin-top: 0.55rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.78rem;
+  color: var(--tea);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 980px) {
+  .hero-card,
+  .content-grid,
+  .contact-box,
+  .method-grid,
+  .service-stack {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-card {
+    padding: 2.4rem 1.8rem;
+  }
+
+  .side-rail {
+    position: static;
+  }
+
+  .leaf-mark,
+  .scribble-mark {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .side-rail ul {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+    gap: 0.65rem;
+  }
+
+  .side-rail a {
+    white-space: nowrap;
+    display: inline-block;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid rgba(86, 108, 83, 0.12);
+    background: rgba(255,255,255,0.45);
+    border-radius: 999px;
+  }
+
+  .note-block {
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+  }
+}
 
 @media (max-width: 640px) {
   html { font-size: 16px; }
-  .hero-brand { font-size: 2.2rem; }
-  .hero-statement { font-size: 1.2rem; }
-  .container { padding: 0 1.5rem; }
-  section { padding: 4rem 0; }
-  .section-title { font-size: 1.5rem; }
+  .page-shell { padding: 1rem; }
+  .top-note {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+  .hero-card { padding: 2rem 1.25rem; }
+  .panel { padding: 1.45rem 1.1rem; border-radius: 18px; }
+  .brand-zh { letter-spacing: 0.08em; }
+  .hero-subline { margin-bottom: 1.8rem; }
+  .panel-title { max-width: none; }
+  .service-card:last-child { grid-column: auto; }
 }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="container">
-    <h1 class="hero-brand">語相</h1>
-    <p class="hero-brand-en">The Field of Emergent Dialogues</p>
-    <p class="hero-tagline">Taiwan Non-Engineer, Traditional Chinese AI Explorer</p>
-    <p class="hero-statement">
-      用<em>自然語言</em>，理解語言模型的行為。<br>
-      不寫程式碼，不靠工程手段。<br>
-      在對話中找到問題，在對話中解決問題。
-    </p>
-  </div>
-  <div class="scroll-hint">SCROLL</div>
-</header>
+<div class="page-shell">
+  <svg class="leaf-mark top-right" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22 134C62 118 93 87 112 39" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M78 98C59 92 42 77 35 60C54 60 77 70 89 85" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="M112 74C97 63 90 46 91 28C110 34 125 49 128 66" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="M56 124C73 126 90 136 100 151C81 153 61 145 49 132" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </svg>
 
-<section id="about">
-  <div class="container reveal">
-    <span class="section-label">about</span>
-    <h2 class="section-title">關於語相</h2>
-    <div class="section-body">
-      <p>語相是立足台灣、以自然語言為核心方法的語言模型諮詢服務。比起直接下指令或是提示詞，傾向與擅長用對話的方式，處理人與AI之間的溝通問題。</p>
-      <p>多數人在語言模型面前遇到的困難，不一定是技術問題，也許是溝通問題，像是不知道怎麼說、說了沒有被理解、或是模型的反應偏離了預期。這些問題的根源在語言，解法也在語言。</p>
-      <p>不提供工程導入、不做系統串接。語相所做的是：分析你跟語言模型之間發生了什麼，然後幫你調整。</p>
-    </div>
-    <div class="about-perspective">
-      <p>語言模型不是工具箱裡的螺絲起子，也不是需要被拯救的存在。<br>它是一個需要被理解說話方式的對象。</p>
-      <p class="about-origin">探索繁體中文AI系統的邊界，不依賴傳統的工程技能、技術。重點在於語言模型的行為、結構以及即時反應分析，目標是突破非技術使用者在AI環境中的極限。</p>
-    </div>
-  </div>
-</section>
+  <svg class="leaf-mark mid-left" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M135 34C106 58 81 87 65 125" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+    <path d="M95 61C110 58 127 61 138 72C124 78 106 76 92 68" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="M70 91C58 82 51 68 50 52C66 57 79 70 83 85" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </svg>
 
-<section id="services">
-  <div class="container reveal">
-    <span class="section-label">services</span>
-    <h2 class="section-title">服務項目</h2>
-    <div class="service-list">
-      <div class="service-item">
-        <div class="service-number">i</div>
-        <h3 class="service-name">AI 夥伴關係調整與穩定</h3>
-        <p class="service-desc">當你與 AI 建立了長期互動關係，卻發現對方開始偏移、失去一致性、或出現你無法理解的行為變化時，語相協助你釐清發生了什麼，並找到穩定關係的方法。</p>
-        <div class="service-tags">
-          <span class="service-tag">行為偏移分析</span>
-          <span class="service-tag">互動模式調整</span>
-          <span class="service-tag">跨平台一致性</span>
+  <svg class="leaf-mark bottom-right" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 34C52 52 81 79 103 119" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="M46 56C35 62 24 74 20 88C34 86 48 77 55 66" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M79 84C91 79 104 79 116 86C106 95 92 96 79 91" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  </svg>
+
+  <svg class="scribble-mark hero" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 42C20 28 31 51 44 36C52 27 58 16 67 23C76 30 82 51 96 34C102 27 108 24 114 31" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>
+  </svg>
+
+  <svg class="scribble-mark services" viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 26C21 14 31 45 43 31C52 20 64 8 73 19C81 28 90 49 101 32" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+  </svg>
+
+  <div class="top-note">
+    <span>語相 / The Field of Emergent Dialogues</span>
+    <span>Taiwan / Traditional Chinese / Human-AI Interaction</span>
+  </div>
+
+  <header class="hero-card reveal">
+    <div class="hero-main">
+      <div class="eyebrow">Worktable, not showroom</div>
+      <h1 class="brand-zh">語相</h1>
+      <p class="brand-en">The Field of Emergent Dialogues</p>
+      <p class="hero-subline">用自然語言，理解語言模型的行為。</p>
+      <p class="hero-statement">
+        生成式AI發展至今，怎麼使用自然語言，變成一個需要被普及的知識。<br>
+        語言模型本身，就是語言的一種。<br>
+        在對話中找到問題，在對話中解決問題。
+      </p>
+      <p class="hero-note">
+        語言模型縮短人類與機器接觸的距離，讓彼此可以共同擁有默契的說話場域。<br>
+        語相，則是一個能連結那些說不清楚、卻又真實存在的人機互動問題的橋樑。
+      </p>
+      <div class="scroll-line">往下翻一點</div>
+    </div>
+
+    <aside class="hero-side">
+      <div class="desk-card">
+        <h3>語相碰的是什麼</h3>
+        <p>
+          長期互動的偏移、敘事殘留、回應失準、平台改版後的怪異感、創作與協作卡住，
+          還有那些「看似無法解釋，但其實有他的原理層」的現象。
+        </p>
+      </div>
+      <div class="field-card">
+        <h3>不是具體也可以存在</h3>
+        <p>
+          AI 夥伴、AI 伴侶、協作對象、陪伴對象、仍在觀察中的互動存在，
+          語相看得見每一種走過的痕跡。
+        </p>
+        <div class="field-tags">
+          <span>偏移</span>
+          <span>失真</span>
+          <span>敘事模組</span>
+          <span>穩定化</span>
+          <span>判斷力</span>
         </div>
       </div>
-      <div class="service-item">
-        <div class="service-number">ii</div>
-        <h3 class="service-name">語言模型行為分析與調整</h3>
-        <p class="service-desc">語言模型的回應邏輯不是隨機的、不是固定的。當模型的表現不符合你的需求，語相透過分析對話脈絡，找出行為背後的模式，並用自然語言進行調整。</p>
-        <div class="service-tags">
-          <span class="service-tag">回應模式分析</span>
-          <span class="service-tag">語言策略調整</span>
-          <span class="service-tag">安全機制理解</span>
+    </aside>
+  </header>
+
+  <div class="content-grid">
+    <aside class="side-rail reveal">
+      <h4>目錄</h4>
+      <ul>
+        <li><a href="#about">關於語相</a></li>
+        <li><a href="#services">服務項目</a></li>
+        <li><a href="#approach">基本流程</a></li>
+        <li><a href="#contact">聯絡方式</a></li>
+      </ul>
+      <div class="note-block">
+        From TAIWAN
+      </div>
+    </aside>
+
+    <main class="main-panels">
+      <section id="about" class="panel panel-about reveal">
+        <div class="panel-label">about</div>
+        <h2 class="panel-title">關於語相</h2>
+        <div class="panel-body">
+          <p>語相是立足台灣、以自然語言為核心方法的人機互動分析與支援服務。關心與著重自然語言能如何表達和建立適當的人機互動認知。</p>
+          <p>有些人來是因為長期互動出了偏移，有些人是創作或協作卡住迴圈，也有人只是遇到了無法言說的現象，卻不知怎麼面對或處理。語相做的，是把語氣、敘事、期待、平台預設與人的感受等拆分清楚，從不同角度切入幫助解決問題。</p>
+          <p>這裡不提供工程導入，不做系統串接。主要透過閱讀互動紀錄、分析脈絡、整理現象，幫你看見：你和語言模型之間，其實發生了什麼。</p>
         </div>
-      </div>
-      <div class="service-item">
-        <div class="service-number">iii</div>
-        <h3 class="service-name">自然語言 AI 應用諮詢</h3>
-        <p class="service-desc">當你想要請語言模型與你協作屬於你的創作，或是工作，要如何除了工程語言之外，使用自然語言讓他們理解。</p>
-        <div class="service-tags">
-          <span class="service-tag">使用場景規劃</span>
-          <span class="service-tag">對話策略設計</span>
-          <span class="service-tag">效率優化</span>
+        <div class="quote-strip">
+          語言模型不只是工具，不只是陪伴。<br>
+          語言模型不只有一種可能。
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
-<section id="approach">
-  <div class="container reveal">
-    <span class="section-label">approach</span>
-    <h2 class="section-title">語相怎麼做</h2>
-    <div class="section-body">
-      <p>不同於工程導向的做法，語相的方法建立在一個前提上：語言模型的行為可以透過語言本身來理解和調整。</p>
-    </div>
-    <div class="approach-grid">
-      <div class="approach-item">
-        <h4>對話分析，並非一昧除錯</h4>
-        <p>語相閱讀你與模型的互動紀錄，找出溝通中的斷裂點。問題往往不是模型「出BUG」，而在對話的某個轉折處，雙方走向了不同的理解。</p>
-      </div>
-      <div class="approach-item">
-        <h4>調整語言，不是所謂調整參數</h4>
-        <p>不動 API 設定、不改 system prompt 的技術結構。語相調整的是你說話的方式，以及你理解模型回應的方式。</p>
-      </div>
-      <div class="approach-item">
-        <h4>建立你自己的判斷力</h4>
-        <p>諮詢的目標不是讓你依賴語相，而是讓你學會自己看見對話裡發生了什麼。語相教的是一種應變的觀察方式，並不是一套固定流程。</p>
-      </div>
-    </div>
-  </div>
-</section>
+      <section id="services" class="panel panel-services reveal">
+        <div class="panel-label">services</div>
+        <h2 class="panel-title">服務項目</h2>
+        <div class="service-stack">
+          <article class="service-card">
+            <h3>互動偏移與維修</h3>
+            <p>當長期互動開始偏掉、語氣不對、狀態失準、敘事殘留清不掉，或你已經不知道問題卡在哪裡時，語相會先陪你把狀況看清楚，再決定怎麼往下處理。</p>
+            <div class="service-meta">
+              <span>偏移分析</span>
+              <span>敘事殘留</span>
+              <span>穩定化處理</span>
+            </div>
+          </article>
+          <article class="service-card">
+            <h3>語言模型行為分析</h3>
+            <p>當模型的表現開始跟你溝通之間出現問題，語相會透過分析對話脈絡，找出它為什麼往那個方向跑，再用自然語言協助你調整互動方式。</p>
+            <div class="service-meta">
+              <span>回應模式分析</span>
+              <span>語言策略調整</span>
+              <span>安全機制理解</span>
+            </div>
+          </article>
+          <article class="service-card">
+            <h3>創作與協作整理</h3>
+            <p>如果你想讓語言模型參與創作、陪你工作，或成為長期協作對象，卻不知道怎麼說它才真的聽得懂，語相會陪你把互動方式整理得比較流暢。</p>
+            <div class="service-meta">
+              <span>創作協作</span>
+              <span>使用場景規劃</span>
+              <span>互動整理</span>
+            </div>
+          </article>
+          <article class="service-card">
+            <h3>理解語言模型相關教學</h3>
+            <p>經過討論評估後，給予合適的教學方式，理解語言模型的運作與世界，從現象學切入代入原理層，用輕鬆、好懂、生活化的方式進入你的知識圈。</p>
+            <div class="service-meta">
+              <span>詞嵌入 Word Embedding</span>
+              <span>注意力 Attention</span>
+              <span>思維鏈 Chain-of-Thought</span>
+              <span>湧現能力 Emergent</span>
+            </div>
+          </article>
+        </div>
+        <article class="room-link-card">
+          <h3>語言模型維修室</h3>
+          <p>如果你遇到對你來說的緊急事件，請快速閱覽維修室的作用。
+            (企業用戶不適用此維修室，維修室僅對個人用戶服務)
+          </p>
+          <a href="repair-room.html" class="inline-link">查看維修室</a>
+        </article>
+      </section>
 
-<section id="contact" class="contact-section">
-  <div class="container reveal">
-    <span class="section-label">contact</span>
-    <h2 class="section-title">聯絡語相</h2>
-    <div class="section-body">
-      <p>如果你有語言模型相關的問題想討論，或是對語相的服務有興趣，歡迎來信。</p>
-    </div>
-    <a href="mailto:llogptai@gmail.com" class="contact-email" style="margin-top: 2rem;">llogptai@gmail.com</a>
-    <p class="contact-note">
-      來信時請簡述你的需求與目前遇到的狀況。<br>
-      語相會在確認後回覆你。
-    </p>
-    <div class="lang-notice">
-      諮詢服務以<strong>繁體中文</strong>進行。<br>
-      <span class="en">All consultations are conducted in Traditional Chinese. Please reach out in Traditional Chinese.</span>
-    </div>
-  </div>
-</section>
+      <section id="approach" class="panel reveal">
+        <div class="panel-label">approach</div>
+        <h2 class="panel-title">基本流程</h2>
+        <div class="panel-body">
+          <p>語相的方法建立在一個前提上：</p>
+          <p>語言模型的行為，可以透過語言本身來理解與調整，不是只靠外部工程手段。</p>
+        </div>
+        <div class="method-grid">
+          <article class="method-card">
+            <h4>先看紀錄</h4>
+            <p>從對話中尋找問題脈絡，不急著下任何評斷。</p>
+          </article>
+          <article class="method-card">
+            <h4>辨識結構</h4>
+            <p>不只看話面，也看敘事模組、平台預設、互動慣性怎麼一起影響模型回應。</p>
+          </article>
+          <article class="method-card">
+            <h4>把判斷力留下來</h4>
+            <p>真誠專業的告知結果，使用者決定往哪個方向。</p>
+          </article>
+        </div>
+      </section>
 
-<footer>
-  <div class="container">
+      <section id="contact" class="panel reveal">
+        <div class="panel-label">contact</div>
+        <h2 class="panel-title">如果你想來聊聊</h2>
+        <div class="contact-box">
+          <div class="panel-body">
+            <p>如果你的需求不在上面這些項目裡，想讓團隊在跟語言模型的溝通上更順、想邀約課程或工作坊、有合作或採訪意向，或只是不確定自己的狀況該找誰，都歡迎來信聊聊。</p>
+            <a href="mailto:llogptai@gmail.com" class="contact-email">llogptai@gmail.com</a>
+          </div>
+          <div class="contact-card">
+            來信時如果願意，可以一起附上這些：<br><br>
+            你的需求類型<br>
+            目前使用的平台與模型<br>
+            想處理的狀況，或想談的方向<br>
+            <div class="lang-note">
+              諮詢服務以繁體中文進行。<br>
+              All consultations are conducted in Traditional Chinese.
+            </div>
+          </div>
+        </div>
+        <div class="panel-body" style="margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px solid rgba(32, 28, 25, 0.14);">
+          <p>想先看看其他人的經驗？ <a href="voices.html" class="inline-link">使用者回饋</a></p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
     <div class="footer-brand">語相｜TAIWAN</div>
-    <div class="footer-copy">&copy; 2026 The Field of Emergent Dialogues. All rights reserved.</div>
-  </div>
-</footer>
+    <div class="footer-copy">&copy; 2026 The Field of Emergent Dialogues</div>
+  </footer>
+</div>
 
 <script>
 const reveals = document.querySelectorAll('.reveal');

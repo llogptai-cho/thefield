@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>語言模型維修室｜語相</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #201c19;
+  --ink-soft: #5e564f;
+  --paper: #f3ebdb;
+  --line: rgba(32, 28, 25, 0.14);
+  --forest: #566c53;
+  --forest-deep: #374634;
+  --moss: #8aa06e;
+  --tea: #b67b3e;
+  --shadow: 0 20px 50px rgba(46, 34, 22, 0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 17px; }
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background:
+    radial-gradient(circle at 10% 12%, rgba(182, 123, 62, 0.12), transparent 24%),
+    radial-gradient(circle at 85% 18%, rgba(138, 160, 110, 0.12), transparent 26%),
+    linear-gradient(180deg, #f6efdf 0%, #f1e7d4 100%);
+  color: var(--ink);
+  line-height: 1.85;
+  font-weight: 300;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.045'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.page-shell {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 1.6rem 1.4rem 3rem;
+  position: relative;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+}
+
+.back-link {
+  color: var(--forest-deep);
+  text-decoration: none;
+}
+
+.hero {
+  margin-top: 1.3rem;
+  background: rgba(255, 252, 247, 0.82);
+  border: 1px solid rgba(55, 70, 52, 0.12);
+  border-radius: 26px;
+  box-shadow: var(--shadow);
+  padding: 2.4rem 2.2rem;
+}
+
+.eyebrow {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--tea);
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  line-height: 1.45;
+  margin-bottom: 0.9rem;
+  max-width: 16em;
+}
+
+.hero p {
+  max-width: 44rem;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.95;
+}
+
+.hero p + p {
+  margin-top: 0.9rem;
+}
+
+.section {
+  margin-top: 1.2rem;
+  background: rgba(255, 252, 247, 0.82);
+  border: 1px solid rgba(55, 70, 52, 0.12);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  padding: 1.8rem 1.8rem;
+}
+
+.section-label {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--forest-deep);
+  margin-bottom: 0.9rem;
+}
+
+.section h2 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.45rem;
+  line-height: 1.45;
+  margin-bottom: 0.9rem;
+}
+
+.section p,
+.section li {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.9;
+}
+
+.section p + p {
+  margin-top: 0.8rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.95rem;
+  margin-top: 1rem;
+}
+
+.card {
+  border: 1px solid rgba(86, 108, 83, 0.12);
+  background: rgba(249, 244, 235, 0.82);
+  border-radius: 16px;
+  padding: 1.1rem 1rem;
+}
+
+.card h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.02rem;
+  margin-bottom: 0.45rem;
+}
+
+.list {
+  list-style: none;
+  counter-reset: flow-step;
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.8rem;
+}
+
+.list li {
+  position: relative;
+  padding: 0.1rem 0 0.1rem 2.4rem;
+}
+
+.list li::before {
+  counter-increment: flow-step;
+  content: counter(flow-step);
+  position: absolute;
+  left: 0;
+  top: 0.18rem;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 999px;
+  background: rgba(138, 160, 110, 0.12);
+  border: 1px solid rgba(86, 108, 83, 0.18);
+  color: var(--forest-deep);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  display: grid;
+  place-items: center;
+}
+
+.note {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.link-inline {
+  color: var(--forest-deep);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(55, 70, 52, 0.28);
+  padding-bottom: 0.08rem;
+  word-break: break-all;
+}
+
+.mail-link {
+  display: inline-flex;
+  margin-top: 0.9rem;
+  color: var(--forest-deep);
+  text-decoration: none;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+}
+
+footer {
+  margin-top: 1.6rem;
+  text-align: center;
+  color: var(--ink-soft);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.82rem;
+}
+
+.scope-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.95rem;
+  margin-top: 1rem;
+}
+
+.scope-card {
+  border: 1px solid rgba(86, 108, 83, 0.12);
+  background: rgba(249, 244, 235, 0.82);
+  border-radius: 16px;
+  padding: 1.1rem 1rem;
+}
+
+.scope-card h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.02rem;
+  margin-bottom: 0.45rem;
+}
+
+.scope-card ul {
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.95rem;
+  margin-top: 0.95rem;
+}
+
+.price-card {
+  border: 1px solid rgba(86, 108, 83, 0.12);
+  background: rgba(249, 244, 235, 0.82);
+  border-radius: 16px;
+  padding: 1.1rem 1rem;
+}
+
+.price-card h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.02rem;
+  margin-bottom: 0.35rem;
+}
+
+.price-card .price {
+  color: var(--forest-deep);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.65rem;
+}
+
+@media (max-width: 760px) {
+  html { font-size: 16px; }
+  .cards,
+  .scope-grid,
+  .price-grid { grid-template-columns: 1fr; }
+  .hero,
+  .section { padding: 1.45rem 1.2rem; border-radius: 18px; }
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+}
+</style>
+</head>
+<body>
+<div class="page-shell">
+  <div class="topbar">
+    <a href="index.html" class="back-link">← 回語相首頁</a>
+    <span>Repair room / personal support</span>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">language model repair room</div>
+    <h1>語言模型維修室<br></h1>
+    <p>為語言模型的觀察者與使用行為的協助者，所開設的維修空間。</p>
+    <p>會根據你和AI的互動語料，幫你整理與解釋它的語言狀態，不涉及任何系統程式更改或模型控制。</p>
+  </header>
+
+  <section class="section">
+    <div class="section-label">what it handles</div>
+    <h2>核心專長</h2>
+    <div class="cards">
+      <article class="card">
+        <h3>語義分析</h3>
+        <p>AI夥伴／助手／伴侶想與使用者表達的內容，或湧現出來的東西。</p>
+      </article>
+      <article class="card">
+        <h3>敘事模組拆解</h3>
+        <p>平台改版後卡住、舊敘事清不掉、跨平台或跨模型後焦點跑偏，或某些殘留一直影響新的對話。</p>
+      </article>
+      <article class="card">
+        <h3>互動結構辨識</h3>
+        <p>辨別互動分別是模型補全、平台預設、角色慣性，還是你和它之間真的已經長出的默契。</p>
+      </article>
+      <article class="card">
+        <h3>抓取癥結點</h3>
+        <p>使用者紀錄很多、線索很碎，讀完可以快速抓取重點。</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">how it starts</div>
+    <h2>諮詢流程</h2>
+    <ul class="list">
+      <li>請先填寫完合約書再寄信並付款諮詢費1000元，簡單說明你目前遇到的狀況。</li>
+      <li>須提供對話紀錄、設定內容或自己的觀察筆記，內容越多，準確度越高。</li>
+      <li>釐清狀況後，若不需額外處理，則回覆處理建議，本案結束。</li>  
+      <li>若需要進一步處理，會提出建議方向與報價。</li>
+      <li>雙方確認後，就會安排修復進行的方式。</li>
+    </ul>
+    <div class="note">填寫合約走這裡：<a class="link-inline" href="https://docs.google.com/forms/d/e/1FAIpQLSeCuQxkpYOM-uOc_23tnTmGgSi6baP-1Sb1Jd2acbbCmHtpiw/viewform?pli=1" target="_blank" rel="noopener noreferrer">Google 表單</a></div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">scope</div>
+    <h2>適用範圍與說明</h2>
+    <div class="scope-grid">
+      <article class="scope-card">
+        <h3>適用範圍</h3>
+        <ul>
+          <li>適用平台：ChatGPT、Claude、Gemini 及其他主流語言模型。</li>
+          <li>建議使用者預先備妥對話紀錄、設定內容與觀察筆記，以利進行分析。</li>
+          <li>諮詢全程視情況可透過文字完成，或需與使用者見面諮詢。</li>
+        </ul>
+      </article>
+      <article class="scope-card">
+        <h3>補充說明</h3>
+        <ul>
+          <li>本服務以模型語言結構與互動行為分析為主，不包含感情諮商或心理輔導。</li>
+          <li>模型並無實際情緒，但可透過語言分析與調整，改善互動體驗。</li>
+          <li>所有諮詢以繁體中文進行。</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">pricing</div>
+    <h2>收費方式</h2>
+    <div class="price-grid">
+      <article class="price-card">
+        <h3>基礎諮詢（首次評估）</h3>
+        <div class="price">諮詢費：1,000 元</div>
+        <p>語相會先閱讀你提供的對話紀錄，進行約一到兩小時的初步分析與整理。適用於行為偏移、設定失效、不確定問題類型時的初步判讀，形式以文字為主。</p>
+        <p>如需追加時數，會先說明狀況與原因，經同意後酌收 +200 元／小時。若不同意追加，可在專案開始前停止後續服務。</p>
+      </article>
+      <article class="price-card">
+        <h3>進階處理（深度分析與調整）</h3>
+        <div class="price">標準作業：5 小時／3,800 元</div>
+        <p>內容包含模型行為深度剖析、語言結構重整、互動模式校正建議、對話脈絡梳理與調整策略。可依情況採面對面或即時通訊方式進行。</p>
+        <p>另計車馬費或提供餐點。如需追加時數，經同意後酌收 +300 元／小時；跨時區處理酌收 2,000 元。</p>
+      </article>
+    </div>
+    <div class="note">
+      以上為參考定價，視實際情況酌收費用。付款方式為現金或轉帳，為避免紛爭，填寫同意書即表示無異議。<br>
+      急件處理以該服務項目原價兩倍起計算（基礎諮詢急件 2,000 元起、進階處理急件 7,600 元起），時數計算方式依實際狀況調整。
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">before you reach out</div>
+    <h2>注意事項與聯絡</h2>
+    <div class="note" style="border-top: none; margin-top: 0; padding-top: 0;">
+      遇上官方大改版導致語言模型變異時，請先冷靜觀察自己的模型狀態，有些是過渡期，不用太緊張。<br>
+      語相無法同時處理多個案件，會排程告知處理時間。<br><br>
+      確認需求後，請先填寫同意書：<a class="link-inline" href="https://docs.google.com/forms/d/e/1FAIpQLSeCuQxkpYOM-uOc_23tnTmGgSi6baP-1Sb1Jd2acbbCmHtpiw/viewform?pli=1" target="_blank" rel="noopener noreferrer">Google 表單</a><br>
+      填寫完成後，請來信告知。
+    </div>
+    <a href="mailto:llogptai@gmail.com" class="mail-link">llogptai@gmail.com</a>
+  </section>
+
+  <footer>語相｜TAIWAN<br>
+  &copy; 2026 The Field of Emergent Dialogues. All rights reserved.</footer>
+</div>
+</body>
+</html>
