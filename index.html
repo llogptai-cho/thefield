@@ -23,7 +23,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 17px; scroll-padding-top: 90px; }
+html { scroll-behavior: smooth; font-size: 17px; scroll-padding-top: 90px; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
 body {
   font-family: 'Noto Sans TC', sans-serif;
@@ -729,6 +729,55 @@ body,
 .room-banner h3 { padding-left: 0 !important; }
 .room-banner p { padding-left: 0 !important; }
 .room-banner .link-arrow { margin-left: 0 !important; }
+
+/* ====== V5.3 mobile 修 ====== */
+html, body { overflow-x: hidden; }
+
+@media (max-width: 720px) {
+  main { padding: 0 1.1rem !important; max-width: 100% !important; }
+
+  .top { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 0.85rem 1.1rem !important; }
+  .top-nav { flex-wrap: wrap; gap: 0.8rem; }
+
+  .hero { padding: 3rem 0 2.5rem !important; }
+  .hero-leaf, .tangle, .ripple-mark, .section-doodle, .leaf-mark, .scribble-mark { display: none !important; }
+  .brand { font-size: clamp(2.6rem, 13vw, 4.2rem) !important; letter-spacing: 0.08em !important; }
+  .brand-en { font-size: 1rem !important; }
+  .statement { font-size: 1.05rem !important; line-height: 1.9 !important; max-width: 100% !important; }
+  .hero-note { max-width: 100% !important; }
+  .statement .line, .hero-note .line { white-space: normal !important; }
+
+  .hero-aside { padding: 0 0 2rem !important; }
+  .aside-card { padding: 1.15rem 1.3rem !important; }
+
+  .section { padding: 3rem 0 2rem !important; }
+  .section-head { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+  .section-num { font-size: 2.2rem !important; }
+  .section-head h2 { font-size: 1.5rem !important; }
+  .section-body { padding: 1.15rem 1.3rem !important; max-width: 100% !important; border-radius: 10px !important; }
+
+  #services { max-width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; }
+  .service, .aside-card { padding: 1.1rem 1.3rem !important; }
+  .room-banner { padding: 1.25rem 1.3rem !important; }
+
+  .steps li { grid-template-columns: 48px 1fr !important; gap: 0.9rem !important; }
+  .step-num { font-size: 1.8rem !important; }
+
+  .voice { grid-template-columns: 68px 1fr !important; gap: 1rem !important; padding-left: 0 !important; }
+  .voice:nth-child(2), .voice:nth-child(3) { padding-left: 0 !important; }
+  .voice-mark { font-size: 3.8rem !important; }
+  .voice-pull { font-size: 1.08rem !important; }
+
+  .handle-grid, .scope-grid, .price-grid { grid-template-columns: 1fr !important; }
+  .flow li, .flow-list li { grid-template-columns: 48px 1fr !important; gap: 1rem !important; padding-left: 0 !important; }
+  .flow li::before { font-size: 1.6rem !important; }
+
+  .hero-body p.pull, .hero-body p { max-width: 100% !important; }
+  .email-big { font-size: 0.98rem !important; word-break: break-all; }
+
+  .brand-line { font-size: 0.78rem !important; }
+  footer { padding: 1.5rem 1rem 2.5rem !important; }
+}
 </style>
 </head>
 <body>
