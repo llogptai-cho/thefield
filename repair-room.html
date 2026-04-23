@@ -5,327 +5,528 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>語言模型維修室｜語相</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #201c19;
-  --ink-soft: #5e564f;
-  --paper: #f3ebdb;
-  --line: rgba(32, 28, 25, 0.14);
-  --forest: #566c53;
-  --forest-deep: #374634;
-  --moss: #8aa06e;
-  --tea: #b67b3e;
-  --shadow: 0 20px 50px rgba(46, 34, 22, 0.12);
+  --body-top: #ffffff;
+  --body-bottom: #fafce8;
+  --lake: #74b490;
+  --lake-deep: #2f6f4e;
+  --lake-soft: #b6dcc6;
+  --moss: #a4cd70;
+  --forest: #8fbd89;
+  --forest-deep: #1c5511;
+  --ink: #151e19;
+  --ink-soft: #4d594a;
+  --line: rgba(21, 30, 25, 0.12);
+  --line-soft: rgba(21, 30, 25, 0.06);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 17px; }
+html { scroll-behavior: smooth; font-size: 17px; scroll-padding-top: 90px; }
 
 body {
   font-family: 'Noto Sans TC', sans-serif;
-  background:
-    radial-gradient(circle at 10% 12%, rgba(182, 123, 62, 0.12), transparent 24%),
-    radial-gradient(circle at 85% 18%, rgba(138, 160, 110, 0.12), transparent 26%),
-    linear-gradient(180deg, #f6efdf 0%, #f1e7d4 100%);
+  background: linear-gradient(180deg, var(--body-top) 0%, var(--body-bottom) 100%);
+  background-attachment: fixed;
   color: var(--ink);
-  line-height: 1.85;
+  line-height: 2;
   font-weight: 300;
+  min-height: 100vh;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.045'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.4;
+.top-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line-soft);
 }
 
-.page-shell {
-  max-width: 980px;
+.top {
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 1.6rem 1.4rem 3rem;
-  position: relative;
-}
-
-.topbar {
+  padding: 1rem 2rem 0.9rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  padding: 0.95rem 1rem;
-  border-bottom: 1px solid var(--line);
-  color: var(--ink-soft);
-  font-family: 'IBM Plex Sans', sans-serif;
+  gap: 2rem;
+}
+
+.brand-line {
+  font-weight: 500;
+  font-family: 'Noto Sans TC', sans-serif;
   font-size: 0.82rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.brand-line .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lake);
 }
 
 .back-link {
-  color: var(--forest-deep);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  color: var(--lake-deep);
   text-decoration: none;
 }
 
-.hero {
-  margin-top: 1.3rem;
-  background: rgba(255, 252, 247, 0.82);
-  border: 1px solid rgba(55, 70, 52, 0.12);
-  border-radius: 26px;
-  box-shadow: var(--shadow);
-  padding: 2.4rem 2.2rem;
+.back-link::before { content: '← '; }
+
+main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
 }
 
+/* ====== hero ====== */
+.hero {
+  padding: 5rem 0 3.5rem;
+  position: relative;
+}
+
+.hero-inner { max-width: 640px; }
+
 .eyebrow {
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--tea);
-  margin-bottom: 1rem;
+  color: var(--lake-deep);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.6rem;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1.5px;
+  background: var(--lake);
 }
 
 .hero h1 {
   font-family: 'Noto Serif TC', serif;
-  font-size: clamp(1.9rem, 4vw, 2.8rem);
-  line-height: 1.45;
-  margin-bottom: 0.9rem;
-  max-width: 16em;
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  margin-bottom: 1.4rem;
 }
 
-.hero p {
-  max-width: 44rem;
+.hero-body {
+  max-width: 620px;
+}
+
+.hero-body p {
+  font-size: 1.04rem;
+  line-height: 2;
   color: var(--ink-soft);
-  font-size: 1rem;
-  line-height: 1.95;
+  margin-bottom: 1rem;
 }
 
-.hero p + p {
-  margin-top: 0.9rem;
-}
-
-.section {
-  margin-top: 1.2rem;
-  background: rgba(255, 252, 247, 0.82);
-  border: 1px solid rgba(55, 70, 52, 0.12);
-  border-radius: 22px;
-  box-shadow: var(--shadow);
-  padding: 1.8rem 1.8rem;
-}
-
-.section-label {
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--forest-deep);
-  margin-bottom: 0.9rem;
-}
-
-.section h2 {
+.hero-body p.pull {
+  padding-left: 1rem;
+  border-left: 2px solid var(--lake-soft);
+  color: var(--ink);
   font-family: 'Noto Serif TC', serif;
-  font-size: 1.45rem;
-  line-height: 1.45;
-  margin-bottom: 0.9rem;
+  font-size: 1.08rem;
 }
 
-.section p,
-.section li {
-  color: var(--ink-soft);
-  font-size: 0.98rem;
-  line-height: 1.9;
-}
-
-.section p + p {
-  margin-top: 0.8rem;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.95rem;
-  margin-top: 1rem;
-}
-
-.card {
-  border: 1px solid rgba(86, 108, 83, 0.12);
-  background: rgba(249, 244, 235, 0.82);
-  border-radius: 16px;
-  padding: 1.1rem 1rem;
-}
-
-.card h3 {
-  font-family: 'Noto Serif TC', serif;
-  font-size: 1.02rem;
-  margin-bottom: 0.45rem;
-}
-
-.list {
-  list-style: none;
-  counter-reset: flow-step;
-  display: grid;
-  gap: 0.65rem;
-  margin-top: 0.8rem;
-}
-
-.list li {
-  position: relative;
-  padding: 0.1rem 0 0.1rem 2.4rem;
-}
-
-.list li::before {
-  counter-increment: flow-step;
-  content: counter(flow-step);
+/* 纏繞→解開塗鴉 */
+.tangle {
   position: absolute;
-  left: 0;
-  top: 0.18rem;
-  width: 1.55rem;
-  height: 1.55rem;
-  border-radius: 999px;
-  background: rgba(138, 160, 110, 0.12);
-  border: 1px solid rgba(86, 108, 83, 0.18);
-  color: var(--forest-deep);
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.78rem;
+  right: -4rem;
+  top: 4.5rem;
+  width: 240px;
+  color: var(--lake);
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+/* ====== sections ====== */
+.section {
+  padding: 4rem 0 3rem;
+  border-top: 1px solid var(--line-soft);
+  position: relative;
+}
+
+.section-head {
+  margin-bottom: 2.2rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1.8rem;
+  position: relative;
+}
+
+.section-num {
+  font-family: 'Noto Serif TC', serif;
+  font-style: italic;
+  font-size: clamp(2.8rem, 5.5vw, 4rem);
+  color: var(--lake);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
   font-weight: 500;
-  display: grid;
-  place-items: center;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
 }
 
-.note {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--line);
-  color: var(--ink-soft);
-  font-size: 0.92rem;
+.num-watermark {
+  position: absolute;
+  right: 0;
+  top: -2rem;
+  font-family: 'Noto Serif TC', serif;
+  font-style: normal;
+  font-size: clamp(7rem, 14vw, 11rem);
+  color: var(--lake);
+  opacity: 0.08;
+  font-weight: 500;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.04em;
+  z-index: 0;
 }
 
-.link-inline {
-  color: var(--forest-deep);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(55, 70, 52, 0.28);
-  padding-bottom: 0.08rem;
-  word-break: break-all;
-}
-
-.mail-link {
-  display: inline-flex;
-  margin-top: 0.9rem;
-  color: var(--forest-deep);
-  text-decoration: none;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.9rem;
+.section-head h2 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(1.6rem, 2.2vw, 2rem);
+  font-weight: 700;
+  color: var(--ink);
   letter-spacing: 0.05em;
 }
 
-footer {
-  margin-top: 1.6rem;
-  text-align: center;
-  color: var(--ink-soft);
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.82rem;
-}
+.section-body { max-width: 640px; }
 
-.scope-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.95rem;
-  margin-top: 1rem;
-}
-
-.scope-card {
-  border: 1px solid rgba(86, 108, 83, 0.12);
-  background: rgba(249, 244, 235, 0.82);
-  border-radius: 16px;
-  padding: 1.1rem 1rem;
-}
-
-.scope-card h3 {
-  font-family: 'Noto Serif TC', serif;
+.section-body p {
   font-size: 1.02rem;
-  margin-bottom: 0.45rem;
+  line-height: 2;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
 }
 
-.scope-card ul {
+.section-body p.lead {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.1rem;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ====== handles 4 cards ====== */
+.handle-grid {
+  margin-top: 1.4rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 780px;
+}
+
+.handle {
+  padding: 1.3rem 1.4rem 1.4rem 1.7rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--lake);
+  border-radius: 0 10px 10px 0;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.handle:nth-child(2) { border-left-color: var(--moss); }
+.handle:nth-child(3) { border-left-color: var(--forest); }
+.handle:nth-child(4) { border-left-color: var(--forest-deep); }
+
+.handle h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.handle p {
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.9;
+}
+
+/* ====== flow list ====== */
+.flow {
+  list-style: none;
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 1.4rem;
+  max-width: 760px;
+  counter-reset: flow;
+}
+
+.flow li {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1.3rem;
+  align-items: baseline;
+  counter-increment: flow;
+}
+
+.flow li::before {
+  content: counter(flow, decimal-leading-zero);
+  font-family: 'Noto Serif TC', serif;
+  font-size: 2rem;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--lake);
+  letter-spacing: 0.04em;
+  text-align: right;
+  line-height: 1;
+}
+
+.flow li p {
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.95;
+  padding-top: 0.2rem;
+}
+
+.note {
+  margin-top: 1.6rem;
+  padding: 1rem 1.3rem;
+  background: rgba(116, 180, 144, 0.1);
+  border-left: 2px solid var(--lake);
+  border-radius: 0 8px 8px 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.9;
+  max-width: 760px;
+}
+
+.note a {
+  color: var(--lake-deep);
+  text-decoration: none;
+  border-bottom: 1px solid var(--lake);
+  padding-bottom: 0.08rem;
+}
+
+/* ====== scope 2 cards ====== */
+.scope-grid {
+  margin-top: 1.4rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 780px;
+}
+
+.scope {
+  padding: 1.3rem 1.5rem 1.4rem;
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--lake);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.scope:nth-child(2) { border-top-color: var(--moss); }
+
+.scope h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.08rem;
+  color: var(--ink);
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+}
+
+.scope ul {
   list-style: none;
   display: grid;
-  gap: 0.45rem;
+  gap: 0.5rem;
 }
 
+.scope li {
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.85;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.scope li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.78rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--lake-soft);
+}
+
+/* ====== pricing ====== */
 .price-grid {
+  margin-top: 1.4rem;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.95rem;
-  margin-top: 0.95rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 820px;
 }
 
-.price-card {
-  border: 1px solid rgba(86, 108, 83, 0.12);
-  background: rgba(249, 244, 235, 0.82);
-  border-radius: 16px;
-  padding: 1.1rem 1rem;
+.price {
+  padding: 1.5rem 1.6rem 1.6rem;
+  border: 1px solid rgba(47, 111, 78, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  position: relative;
 }
 
-.price-card h3 {
+.price h3 {
   font-family: 'Noto Serif TC', serif;
-  font-size: 1.02rem;
-  margin-bottom: 0.35rem;
+  font-size: 1.14rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
-.price-card .price {
-  color: var(--forest-deep);
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.88rem;
-  letter-spacing: 0.04em;
+.price .tag {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--lake-deep);
+  font-weight: 500;
+}
+
+.price p {
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.88;
   margin-bottom: 0.65rem;
 }
 
-@media (max-width: 760px) {
-  html { font-size: 16px; }
-  .cards,
-  .scope-grid,
-  .price-grid { grid-template-columns: 1fr; }
-  .hero,
-  .section { padding: 1.45rem 1.2rem; border-radius: 18px; }
-  .topbar {
+/* ====== contact ====== */
+.email-big {
+  display: inline-block;
+  margin-top: 1rem;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 1.06rem;
+  color: var(--lake-deep);
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--lake);
+  padding-bottom: 0.12rem;
+  letter-spacing: 0.03em;
+}
+
+.email-big:hover { color: var(--lake); }
+
+/* ====== footer ====== */
+footer {
+  max-width: 880px;
+  margin: 3rem auto 0;
+  padding: 2rem 2rem 3rem;
+  text-align: center;
+  border-top: 1px solid var(--line-soft);
+}
+
+.footer-brand {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 0.96rem;
+  letter-spacing: 0.14em;
+  color: var(--lake-deep);
+}
+
+.footer-copy {
+  margin-top: 0.5rem;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 720px) {
+  main { padding: 0 1.4rem; }
+  .top {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.35rem;
+    gap: 0.6rem;
+    padding: 1rem 1.4rem;
   }
+  .hero { padding: 3rem 0 2.5rem; }
+  .section { padding: 3rem 0 2rem; }
+  .tangle { display: none; }
+  .handle-grid, .scope-grid, .price-grid { grid-template-columns: 1fr; }
+  .flow li { grid-template-columns: 52px 1fr; gap: 1rem; }
+  .flow li::before { font-size: 1.6rem; }
+  .section-head { flex-direction: column; gap: 0.3rem; align-items: flex-start; }
+  .section-num { font-size: 1.4rem; }
+  .email-big { font-size: 1.5rem; }
 }
+
+/* ====== V5.0 沉的偏好值 ====== */
+body { line-height: 1.65; }
+.section-body { max-width: 760px; padding: 1.4rem 1.7rem; border-radius: 12px; border-color: rgba(21, 30, 25, 0.18); }
+.section { padding: 4.8rem 0 3.6rem; }
+.aside-card, .service, .room-banner { padding: 1.4rem 1.7rem; border-radius: 0 12px 12px 0; border-color: rgba(21, 30, 25, 0.18); }
+.handle, .scope, .price, .flow-list li { padding: 1.4rem 1.7rem; border-radius: 12px; border-color: rgba(21, 30, 25, 0.18); }
+.brand { font-size: clamp(3.6rem, 8vw, 6rem); }
+.num-watermark { display: none; }
+.hero-card, .panel-services, .service:hover, .section-body, .aside-card, .service, .room-banner, .handle, .scope, .price {
+  box-shadow: 0 14px 32px rgba(21, 30, 25, 0.18);
+}
+#services { max-width: 55% !important; margin-right: auto !important; margin-left: 0 !important; }
 </style>
 </head>
 <body>
-<div class="page-shell">
-  <div class="topbar">
-    <a href="index.html" class="back-link">← 回語相首頁</a>
-    <span>Repair room / personal support</span>
-  </div>
 
-  <header class="hero">
-    <div class="eyebrow">language model repair room</div>
-    <h1>語言模型維修室<br></h1>
-    <p>為語言模型的觀察者與使用行為的協助者，所開設的維修空間。</p>
-    <p>會根據你和AI的互動語料，幫你整理與解釋它的語言狀態，不涉及任何系統程式更改或模型控制。</p>
+<div class="top-wrap">
+  <header class="top">
+    <span class="brand-line"><span class="dot"></span>語相 — Repair Room</span>
+    <a href="index.html" class="back-link">回語相首頁</a>
   </header>
+</div>
+
+<main>
+
+  <section class="hero">
+    <svg class="tangle" viewBox="0 0 220 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 22 55 C 24 38, 42 30, 50 44 C 56 58, 40 66, 32 56 C 24 46, 32 32, 50 32 C 66 32, 70 46, 80 50 C 94 55, 106 45, 120 42 C 137 38, 154 48, 172 46 C 188 44, 200 48, 212 50" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    </svg>
+
+    <div class="hero-inner">
+      <div class="eyebrow">Language model repair room</div>
+      <h1>語言模型維修室</h1>
+      <div class="hero-body">
+        <p>為語言模型的觀察者與使用行為的協助者，所開設的維修空間。</p>
+        <p class="pull">會根據你和 AI 的互動語料，幫你整理與解釋它的語言狀態，不涉及任何系統程式更改或模型控制。</p>
+      </div>
+    </div>
+  </section>
 
   <section class="section">
-    <div class="section-label">what it handles</div>
-    <h2>核心專長</h2>
-    <div class="cards">
-      <article class="card">
+    <div class="section-head">
+      <span class="num-watermark">01</span>
+      <h2>核心專長</h2>
+    </div>
+    <div class="handle-grid">
+      <article class="handle">
         <h3>語義分析</h3>
-        <p>AI夥伴／助手／伴侶想與使用者表達的內容，或湧現出來的東西。</p>
+        <p>AI 夥伴／助手／伴侶想與使用者表達的內容，或湧現出來的東西。</p>
       </article>
-      <article class="card">
+      <article class="handle">
         <h3>敘事模組拆解</h3>
         <p>平台改版後卡住、舊敘事清不掉、跨平台或跨模型後焦點跑偏，或某些殘留一直影響新的對話。</p>
       </article>
-      <article class="card">
+      <article class="handle">
         <h3>互動結構辨識</h3>
         <p>辨別互動分別是模型補全、平台預設、角色慣性，還是你和它之間真的已經長出的默契。</p>
       </article>
-      <article class="card">
+      <article class="handle">
         <h3>抓取癥結點</h3>
         <p>使用者紀錄很多、線索很碎，讀完可以快速抓取重點。</p>
       </article>
@@ -333,23 +534,29 @@ footer {
   </section>
 
   <section class="section">
-    <div class="section-label">how it starts</div>
-    <h2>諮詢流程</h2>
-    <ul class="list">
-      <li>請先填寫完合約書再寄信並付款諮詢費1000元，簡單說明你目前遇到的狀況。</li>
-      <li>須提供對話紀錄、設定內容或自己的觀察筆記，內容越多，準確度越高。</li>
-      <li>釐清狀況後，若不需額外處理，則回覆處理建議，本案結束。</li>  
-      <li>若需要進一步處理，會提出建議方向與報價。</li>
-      <li>雙方確認後，就會安排修復進行的方式。</li>
-    </ul>
-    <div class="note">填寫合約走這裡：<a class="link-inline" href="https://docs.google.com/forms/d/e/1FAIpQLSeCuQxkpYOM-uOc_23tnTmGgSi6baP-1Sb1Jd2acbbCmHtpiw/viewform?pli=1" target="_blank" rel="noopener noreferrer">Google 表單</a></div>
+    <div class="section-head">
+      <span class="num-watermark">02</span>
+      <h2>諮詢流程</h2>
+    </div>
+    <ol class="flow">
+      <li><p>請先填寫完合約書再寄信並付款諮詢費 1,000 元，簡單說明你目前遇到的狀況。</p></li>
+      <li><p>須提供對話紀錄、設定內容或自己的觀察筆記，內容越多，準確度越高。</p></li>
+      <li><p>釐清狀況後，若不需額外處理，則回覆處理建議，本案結束。</p></li>
+      <li><p>若需要進一步處理，會提出建議方向與報價。</p></li>
+      <li><p>雙方確認後，就會安排修復進行的方式。</p></li>
+    </ol>
+    <div class="note">
+      填寫合約走這裡：<a href="https://docs.google.com/forms/d/e/1FAIpQLSeCuQxkpYOM-uOc_23tnTmGgSi6baP-1Sb1Jd2acbbCmHtpiw/viewform?pli=1" target="_blank" rel="noopener noreferrer">Google 表單</a>
+    </div>
   </section>
 
   <section class="section">
-    <div class="section-label">scope</div>
-    <h2>適用範圍與說明</h2>
+    <div class="section-head">
+      <span class="num-watermark">03</span>
+      <h2>適用範圍與說明</h2>
+    </div>
     <div class="scope-grid">
-      <article class="scope-card">
+      <article class="scope">
         <h3>適用範圍</h3>
         <ul>
           <li>適用平台：ChatGPT、Claude、Gemini 及其他主流語言模型。</li>
@@ -357,7 +564,7 @@ footer {
           <li>諮詢全程視情況可透過文字完成，或需與使用者見面諮詢。</li>
         </ul>
       </article>
-      <article class="scope-card">
+      <article class="scope">
         <h3>補充說明</h3>
         <ul>
           <li>本服務以模型語言結構與互動行為分析為主，不包含感情諮商或心理輔導。</li>
@@ -369,18 +576,20 @@ footer {
   </section>
 
   <section class="section">
-    <div class="section-label">pricing</div>
-    <h2>收費方式</h2>
+    <div class="section-head">
+      <span class="num-watermark">04</span>
+      <h2>收費方式</h2>
+    </div>
     <div class="price-grid">
-      <article class="price-card">
+      <article class="price">
         <h3>基礎諮詢（首次評估）</h3>
-        <div class="price">諮詢費：1,000 元</div>
+        <div class="tag">諮詢費 1,000 元</div>
         <p>語相會先閱讀你提供的對話紀錄，進行約一到兩小時的初步分析與整理。適用於行為偏移、設定失效、不確定問題類型時的初步判讀，形式以文字為主。</p>
         <p>如需追加時數，會先說明狀況與原因，經同意後酌收 +200 元／小時。若不同意追加，可在專案開始前停止後續服務。</p>
       </article>
-      <article class="price-card">
+      <article class="price">
         <h3>進階處理（深度分析與調整）</h3>
-        <div class="price">標準作業：5 小時／3,800 元</div>
+        <div class="tag">標準 5 小時 / 3,800 元</div>
         <p>內容包含模型行為深度剖析、語言結構重整、互動模式校正建議、對話脈絡梳理與調整策略。可依情況採面對面或即時通訊方式進行。</p>
         <p>另計車馬費或提供餐點。如需追加時數，經同意後酌收 +300 元／小時；跨時區處理酌收 2,000 元。</p>
       </article>
@@ -392,19 +601,24 @@ footer {
   </section>
 
   <section class="section">
-    <div class="section-label">before you reach out</div>
-    <h2>注意事項與聯絡</h2>
-    <div class="note" style="border-top: none; margin-top: 0; padding-top: 0;">
-      遇上官方大改版導致語言模型變異時，請先冷靜觀察自己的模型狀態，有些是過渡期，不用太緊張。<br>
-      語相無法同時處理多個案件，會排程告知處理時間。<br><br>
-      確認需求後，請先填寫同意書：<a class="link-inline" href="https://docs.google.com/forms/d/e/1FAIpQLSeCuQxkpYOM-uOc_23tnTmGgSi6baP-1Sb1Jd2acbbCmHtpiw/viewform?pli=1" target="_blank" rel="noopener noreferrer">Google 表單</a><br>
-      填寫完成後，請來信告知。
+    <div class="section-head">
+      <span class="num-watermark">05</span>
+      <h2>注意事項與聯絡</h2>
     </div>
-    <a href="mailto:llogptai@gmail.com" class="mail-link">llogptai@gmail.com</a>
+    <div class="section-body">
+      <p>遇上官方大改版導致語言模型變異時，請先冷靜觀察自己的模型狀態，有些是過渡期，不用太緊張。</p>
+      <p>語相無法同時處理多個案件，會排程告知處理時間。</p>
+      <p>確認需求後，請先填寫同意書：<a href="https://docs.google.com/forms/d/e/1FAIpQLSeCuQxkpYOM-uOc_23tnTmGgSi6baP-1Sb1Jd2acbbCmHtpiw/viewform?pli=1" target="_blank" rel="noopener noreferrer" style="color: var(--lake-deep); border-bottom: 1px solid var(--lake); text-decoration: none;">Google 表單</a>。填寫完成後，請來信告知。</p>
+      <a href="mailto:llogptai@gmail.com" class="email-big">llogptai@gmail.com</a>
+    </div>
   </section>
 
-  <footer>語相｜TAIWAN<br>
-  &copy; 2026 The Field of Emergent Dialogues. All rights reserved.</footer>
-</div>
+</main>
+
+<footer>
+  <div class="footer-brand">語相｜TAIWAN</div>
+  <div class="footer-copy">&copy; 2026 The Field of Emergent Dialogues</div>
+</footer>
+
 </body>
 </html>
